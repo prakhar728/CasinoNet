@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react"
 import Link from "next/link"
+import Image from "next/image"
 
 export default function VideoHero() {
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -66,9 +67,16 @@ export default function VideoHero() {
               style={{
                 left: `${Math.random() * 100}%`,
                 animationDelay: `${Math.random() * 5}s`,
-                backgroundColor: ["#e11d48", "#f59e0b", "#10b981", "#3b82f6", "#8b5cf6"][Math.floor(Math.random() * 5)],
               }}
-            ></div>
+            >
+              <Image 
+                src={`/chip-${(i % 3) + 1}.png`} 
+                alt="Casino chip" 
+                width={60} 
+                height={60}
+                className="w-full h-full object-contain"
+              />
+            </div>
           ))}
         </div>
       </div>
@@ -79,7 +87,53 @@ export default function VideoHero() {
           <div className="w-1 h-3 bg-white rounded-full mt-2 animate-scrollDown"></div>
         </div>
       </div>
+
+      {/* CSS for chip animation */}
+      <style jsx>{`
+        .chip-animation {
+          position: relative;
+          width: 100%;
+          height: 100%;
+        }
+        
+        .chip {
+          position: absolute;
+          width: 60px;
+          height: 60px;
+          bottom: -80px;
+          animation: floatUp 10s ease-in-out infinite;
+          filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+          transform: rotate(0deg);
+        }
+        
+        @keyframes floatUp {
+          0% {
+            transform: translateY(0) rotate(0deg);
+            opacity: 0;
+          }
+          10% {
+            opacity: 1;
+          }
+          90% {
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(-400px) rotate(360deg);
+            opacity: 0;
+          }
+        }
+        
+        @keyframes scrollDown {
+          0% {
+            transform: translateY(0);
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(6px);
+            opacity: 0;
+          }
+        }
+      `}</style>
     </section>
   )
 }
-
